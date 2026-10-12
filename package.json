@@ -3,16 +3,26 @@
   "private": true,
   "packageManager": "pnpm@10.25.0",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=20.19.0"
   },
   "scripts": {
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@cbd/config": "workspace:*",
+    "prettier": "3.9.10",
+    "simple-git-hooks": "2.14.0",
     "turbo": "2.11.7",
     "typescript": "6.0.3"
+  },
+  "type": "module",
+  "simple-git-hooks": {
+    "pre-commit": "git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 -r pnpm exec prettier --check --ignore-unknown",
+    "pre-push": "pnpm format:check && pnpm lint && pnpm typecheck"
   }
 }
