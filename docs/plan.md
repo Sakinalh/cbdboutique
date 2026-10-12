@@ -167,7 +167,9 @@ cbdboutique/
 │  ├─ contracts/              schémas Zod requêtes/réponses + OpenAPI
 │  └─ config/                 ESLint, TypeScript, Prettier, Vitest partagés
 ├─ quality/                   contrôles de régression (SEO, GEO, perf), pages surveillées, budgets
-└─ docs/plan.md
+└─ docs/
+   ├─ plan.md
+   └─ adr/                    décisions d'architecture (une par fichier, voir adr/README.md)
 ```
 
 ## Qualité du code (règles appliquées par l'outillage, pas par la bonne volonté)
@@ -241,7 +243,8 @@ Lighthouse, SEO et GEO sur la production et ouvre une issue en cas de dégradati
 
 **Définition de « fini »** : CI verte (tous les contrôles ci-dessus), tests écrits, nouveau
 gabarit ajouté à `quality/pages.ts`, nouveaux ports accompagnés de leur adapter en mémoire et
-de leurs tests de contrat, documentation (OpenAPI / README de la fonctionnalité) à jour.
+de leurs tests de contrat, documentation (OpenAPI / README de la fonctionnalité) à jour,
+un **ADR** dans `docs/adr/` pour toute décision structurante.
 
 ## Contraintes CBD à respecter dans le code et les contenus
 
