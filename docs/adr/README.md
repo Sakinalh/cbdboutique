@@ -21,3 +21,4 @@ Pour en écrire une nouvelle : copier [template.md](template.md) avec le numéro
 | [0013](0013-limiter-les-dependances.md)                              | Limiter les dépendances                                   | accepté |
 | [0014](0014-isoler-l-authentification-derriere-un-port.md)           | Isoler l'authentification derrière un port                | accepté |
 | [0015](0015-payer-via-une-page-hebergee-et-un-webhook-idempotent.md) | Payer via une page hébergée et un webhook idempotent      | proposé |
+| [0016](0016-garder-jsx-a11y-avec-eslint-10.md)                       | Garder eslint-plugin-jsx-a11y avec ESLint 10              | accepté |
