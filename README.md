@@ -19,6 +19,12 @@ Monorepo pnpm + Turborepo. Plan technique et découpage en tickets : [docs/plan.
 | `pnpm test`         | tests                                        |
 | `pnpm build`        | build des applications                       |
 
+## Applications
+
+| Application | Rôle            | Lancer en local                                      |
+| ----------- | --------------- | ---------------------------------------------------- |
+| `apps/web`  | site Next.js 16 | `pnpm --filter @cbd/web dev` → http://localhost:3000 |
+
 ## Configuration partagée
 
 `packages/config` contient la configuration commune (TypeScript strict, ESLint, Prettier).
@@ -28,7 +34,7 @@ Chaque paquet étend TypeScript :
 { "extends": "@cbd/config/tsconfig/base.json" }
 ```
 
-et déclare ESLint dans un `eslint.config.js` :
+et déclare ESLint dans un `eslint.config.js` (`@cbd/config/eslint/next` pour une application Next.js) :
 
 ```js
 import { createConfig } from '@cbd/config/eslint';

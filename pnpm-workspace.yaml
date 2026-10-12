@@ -4,3 +4,8 @@ packages:
 
 onlyBuiltDependencies:
   - simple-git-hooks
+
+peerDependencyRules:
+  # eslint-plugin-jsx-a11y fonctionne avec ESLint 10 mais ne l'a pas déclaré (voir docs/adr/0016).
+  allowedVersions:
+    eslint-plugin-jsx-a11y>eslint: '10'
