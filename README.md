@@ -4,24 +4,41 @@ Monorepo pnpm + Turborepo. Plan technique et découpage en tickets : [docs/plan.
 
 ## Prérequis
 
-- Node.js ≥ 20.9 (voir `.nvmrc`)
+- Node.js ≥ 20.19 (voir `.nvmrc`)
 - pnpm 10 (`corepack enable`)
 
 ## Commandes
 
-| Commande | Rôle |
-|---|---|
-| `pnpm install` | installe les dépendances de tous les paquets |
-| `pnpm typecheck` | vérifie les types (TypeScript strict) |
-| `pnpm lint` | lint |
-| `pnpm test` | tests |
-| `pnpm build` | build des applications |
+| Commande            | Rôle                                         |
+| ------------------- | -------------------------------------------- |
+| `pnpm install`      | installe les dépendances de tous les paquets |
+| `pnpm typecheck`    | vérifie les types (TypeScript strict)        |
+| `pnpm lint`         | lint                                         |
+| `pnpm format`       | formate tout le dépôt (Prettier)             |
+| `pnpm format:check` | vérifie le format sans modifier              |
+| `pnpm test`         | tests                                        |
+| `pnpm build`        | build des applications                       |
 
 ## Configuration partagée
 
-`packages/config` contient la configuration TypeScript stricte commune.
-Chaque paquet l'étend :
+`packages/config` contient la configuration commune (TypeScript strict, ESLint, Prettier).
+Chaque paquet étend TypeScript :
 
 ```json
 { "extends": "@cbd/config/tsconfig/base.json" }
 ```
+
+et déclare ESLint dans un `eslint.config.js` :
+
+```js
+import { createConfig } from '@cbd/config/eslint';
+
+export default createConfig({ tsconfigRootDir: import.meta.dirname });
+```
+
+## Hooks Git
+
+Installés automatiquement par `pnpm install` (simple-git-hooks) :
+
+- **pre-commit** : vérifie le format des fichiers indexés ;
+- **pre-push** : format, lint et types sur tout le dépôt (rapide grâce au cache Turborepo).

@@ -2,7 +2,26 @@
   "name": "@cbd/config",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "exports": {
-    "./tsconfig/base.json": "./tsconfig/base.json"
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./eslint": "./eslint/index.js",
+    "./prettier": "./prettier/index.js"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@eslint/js": "10.0.1",
+    "typescript-eslint": "8.71.2"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "typescript": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "10.12.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3"
   }
 }

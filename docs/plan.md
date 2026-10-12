@@ -26,25 +26,25 @@ Navigateur ──▶ apps/web (Next.js 16, Netlify)  ──HTTPS──▶  apps/
 
 ## Stack (0 € au départ)
 
-| Brique | Choix | Coût avant ventes |
-|---|---|---|
-| Langage | **TypeScript strict** partout (front, API, scripts, tests) | 0 € |
-| Front | Next.js 16 (App Router) sur **Netlify** | 0 € |
-| API | **Hono** sur **Cloudflare Workers** (pas de mise en veille, sans carte bancaire) | 0 € |
-| Contrat d'API | **Zod** partagé + documentation **OpenAPI** générée | 0 € |
-| Base de données | **Neon** (PostgreSQL serverless, une branche de base par PR) | 0 € |
-| Accès aux données | **Drizzle ORM** (migrations versionnées), uniquement dans un adapter | 0 € |
-| Comptes clients + admin | **Better Auth**, exécuté dans l'API, isolé derrière un port | 0 € |
-| Images et certificats d'analyse | **Cloudinary** (offre gratuite, optimisation des images) | 0 € |
-| E-mails transactionnels | **Resend** | 0 € (quota gratuit) |
-| Tâches planifiées | **Cron Triggers** Cloudflare (paniers abandonnés, sauvegardes, IndexNow) | 0 € |
-| Paiement | Prestataire **acceptant le CBD**, page de paiement hébergée + webhook | commission par vente uniquement |
-| Mesure d'audience | GA4 via Tag Manager, après consentement (comme MNL) | 0 € |
-| Tests | **Vitest** (unitaires, contrats), **Playwright** + axe-core (E2E, a11y) | 0 € |
-| Qualité | **ESLint** (typescript-eslint, boundaries, jsx-a11y), Prettier, knip, jscpd | 0 € |
-| Surveillance des régressions | **Lighthouse CI**, contrôles SEO/GEO maison, GitHub Actions | 0 € |
-| Monorepo | **pnpm workspaces** + **Turborepo** (cache des builds et des tests) | 0 € |
-| Domaine | à acheter au lancement | ~7–12 €/an |
+| Brique                          | Choix                                                                            | Coût avant ventes               |
+| ------------------------------- | -------------------------------------------------------------------------------- | ------------------------------- |
+| Langage                         | **TypeScript strict** partout (front, API, scripts, tests)                       | 0 €                             |
+| Front                           | Next.js 16 (App Router) sur **Netlify**                                          | 0 €                             |
+| API                             | **Hono** sur **Cloudflare Workers** (pas de mise en veille, sans carte bancaire) | 0 €                             |
+| Contrat d'API                   | **Zod** partagé + documentation **OpenAPI** générée                              | 0 €                             |
+| Base de données                 | **Neon** (PostgreSQL serverless, une branche de base par PR)                     | 0 €                             |
+| Accès aux données               | **Drizzle ORM** (migrations versionnées), uniquement dans un adapter             | 0 €                             |
+| Comptes clients + admin         | **Better Auth**, exécuté dans l'API, isolé derrière un port                      | 0 €                             |
+| Images et certificats d'analyse | **Cloudinary** (offre gratuite, optimisation des images)                         | 0 €                             |
+| E-mails transactionnels         | **Resend**                                                                       | 0 € (quota gratuit)             |
+| Tâches planifiées               | **Cron Triggers** Cloudflare (paniers abandonnés, sauvegardes, IndexNow)         | 0 €                             |
+| Paiement                        | Prestataire **acceptant le CBD**, page de paiement hébergée + webhook            | commission par vente uniquement |
+| Mesure d'audience               | GA4 via Tag Manager, après consentement (comme MNL)                              | 0 €                             |
+| Tests                           | **Vitest** (unitaires, contrats), **Playwright** + axe-core (E2E, a11y)          | 0 €                             |
+| Qualité                         | **ESLint** (typescript-eslint, boundaries, jsx-a11y), Prettier, knip, jscpd      | 0 €                             |
+| Surveillance des régressions    | **Lighthouse CI**, contrôles SEO/GEO maison, GitHub Actions                      | 0 €                             |
+| Monorepo                        | **pnpm workspaces** + **Turborepo** (cache des builds et des tests)              | 0 €                             |
+| Domaine                         | à acheter au lancement                                                           | ~7–12 €/an                      |
 
 ## Principes d'architecture
 
@@ -88,7 +88,9 @@ export interface ProductRepository {
 // packages/core/src/catalog/application/get-product.ts
 export const makeGetProduct =
   ({ products }: { products: ProductRepository }) =>
-  async (slug: Slug): Promise<Result<Product, ProductNotFound>> => { /* … */ };
+  async (slug: Slug): Promise<Result<Product, ProductNotFound>> => {
+    /* … */
+  };
 
 // apps/api/src/composition-root.ts — le SEUL fichier qui choisit les implémentations
 export const buildContainer = (env: Env) => {
@@ -110,17 +112,17 @@ rapides des cas d'usage, démo sans base). Les deux passent la même suite de te
 Le code est rangé **par fonctionnalité métier**, pas par type technique. Chaque fonctionnalité
 expose une API publique (`index.ts`) ; les autres ne peuvent importer que cela.
 
-| Fonctionnalité | Responsabilité | Ne fait pas |
-|---|---|---|
-| `catalog` | catégories, produits, variantes, prix affichés | stock, panier |
-| `lab-reports` | lots, certificats d'analyse, taux de THC | — |
-| `inventory` | quantités, réservations, décrément atomique | prix |
-| `cart` | panier invité / client, fusion | paiement |
-| `ordering` | commande, cycle de vie, factures, rétractation | encaissement |
-| `payments` | session de paiement, webhook idempotent | logique de commande |
-| `accounts` | identité, rôles, espace client, RGPD | — |
-| `content` | guides, FAQ, pages légales, `llms.txt`, Markdown | — |
-| `discovery` | sitemap, IndexNow, flux pour moteurs et IA | — |
+| Fonctionnalité | Responsabilité                                   | Ne fait pas         |
+| -------------- | ------------------------------------------------ | ------------------- |
+| `catalog`      | catégories, produits, variantes, prix affichés   | stock, panier       |
+| `lab-reports`  | lots, certificats d'analyse, taux de THC         | —                   |
+| `inventory`    | quantités, réservations, décrément atomique      | prix                |
+| `cart`         | panier invité / client, fusion                   | paiement            |
+| `ordering`     | commande, cycle de vie, factures, rétractation   | encaissement        |
+| `payments`     | session de paiement, webhook idempotent          | logique de commande |
+| `accounts`     | identité, rôles, espace client, RGPD             | —                   |
+| `content`      | guides, FAQ, pages légales, `llms.txt`, Markdown | —                   |
+| `discovery`    | sitemap, IndexNow, flux pour moteurs et IA       | —                   |
 
 Les fonctionnalités communiquent par leurs cas d'usage publics ou par des **événements**
 (`ProductPublished` → IndexNow, `OrderPaid` → e-mail + décrément de stock), jamais en lisant
@@ -174,6 +176,7 @@ cbdboutique/
 `noImplicitOverride`, `verbatimModuleSyntax`. Aucun `any`, aucun `as` non justifié.
 
 **ESLint** (config partagée dans `packages/config`, erreurs bloquantes en CI) :
+
 - `typescript-eslint` `strict-type-checked` + `stylistic-type-checked` ;
 - promesses : `no-floating-promises`, `no-misused-promises` ;
 - lisibilité : `complexity` ≤ 10, `max-depth` ≤ 3, `max-params` ≤ 3 (au-delà : un objet),
@@ -189,9 +192,10 @@ cbdboutique/
 **Clean code au quotidien** : fonctions courtes à une seule responsabilité, noms métier
 (langage du domaine : lot, certificat d'analyse, réservation…), erreurs métier attendues
 renvoyées sous forme de `Result` (pas d'exceptions pour le flux normal), pas de valeurs
-« magiques » (constantes nommées), commentaires réservés au *pourquoi*.
+« magiques » (constantes nommées), commentaires réservés au _pourquoi_.
 
 **Tests** :
+
 - `domain` : tests unitaires purs, couverture ≥ 90 % ;
 - `application` : tests des cas d'usage avec les adapters **en mémoire** (rapides, sans réseau) ;
 - `infra` : tests de contrat sur la branche Neon de la PR ;
@@ -205,18 +209,18 @@ Un **commentaire unique** sur la PR récapitule tous les contrôles (✅ / ❌ +
 Une régression **bloque la fusion** ; un changement voulu se valide en mettant à jour la
 référence dans la même PR (le diff est donc visible en revue).
 
-| Domaine | Ce qui est vérifié | Seuil |
-|---|---|---|
-| Performance web | Lighthouse mobile (3 passages, médiane) sur chaque gabarit | perf ≥ 95, LCP < 2,5 s, CLS < 0,1, TBT < 200 ms |
-| Poids | JS/CSS par route, images | budget par route, + 5 Ko max vs `main` sans justification |
-| Performance API | p95 des routes clés sur la preview, nombre de requêtes SQL par route | p95 < 300 ms, pas de N+1 |
-| SEO | par gabarit : `title`, description, canonical, `robots`, H1 unique, Open Graph, statut HTTP | identique à la référence `quality/seo-baseline.json` |
-| Données structurées | JSON-LD présent et valide par gabarit (`Product`, `Offer`, `BreadcrumbList`…) | champs requis Google présents |
-| Adresses | sitemap de la preview vs production : URL disparue sans 301 = échec ; liens internes cassés ; HTML valide | 0 |
-| GEO | `robots.txt` autorise les robots d'IA ; `llms.txt` contient tous les produits publiés ; versions Markdown en 200 `text/markdown` ; faits clés (prix, THC, lien du certificat) présents dans le HTML **sans JavaScript** | 0 manque |
-| Accessibilité | axe-core sur chaque gabarit | 0 violation |
-| Contenu | aucune allégation de santé | 0 |
-| Code | lint, types, frontières, knip, duplication (jscpd), couverture | 0 erreur, couverture ≥ `main` |
+| Domaine             | Ce qui est vérifié                                                                                                                                                                                                      | Seuil                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Performance web     | Lighthouse mobile (3 passages, médiane) sur chaque gabarit                                                                                                                                                              | perf ≥ 95, LCP < 2,5 s, CLS < 0,1, TBT < 200 ms           |
+| Poids               | JS/CSS par route, images                                                                                                                                                                                                | budget par route, + 5 Ko max vs `main` sans justification |
+| Performance API     | p95 des routes clés sur la preview, nombre de requêtes SQL par route                                                                                                                                                    | p95 < 300 ms, pas de N+1                                  |
+| SEO                 | par gabarit : `title`, description, canonical, `robots`, H1 unique, Open Graph, statut HTTP                                                                                                                             | identique à la référence `quality/seo-baseline.json`      |
+| Données structurées | JSON-LD présent et valide par gabarit (`Product`, `Offer`, `BreadcrumbList`…)                                                                                                                                           | champs requis Google présents                             |
+| Adresses            | sitemap de la preview vs production : URL disparue sans 301 = échec ; liens internes cassés ; HTML valide                                                                                                               | 0                                                         |
+| GEO                 | `robots.txt` autorise les robots d'IA ; `llms.txt` contient tous les produits publiés ; versions Markdown en 200 `text/markdown` ; faits clés (prix, THC, lien du certificat) présents dans le HTML **sans JavaScript** | 0 manque                                                  |
+| Accessibilité       | axe-core sur chaque gabarit                                                                                                                                                                                             | 0 violation                                               |
+| Contenu             | aucune allégation de santé                                                                                                                                                                                              | 0                                                         |
+| Code                | lint, types, frontières, knip, duplication (jscpd), couverture                                                                                                                                                          | 0 erreur, couverture ≥ `main`                             |
 
 La liste des pages surveillées est dans `quality/pages.ts` : **chaque nouveau gabarit de page
 s'y ajoute dans la PR qui le crée** (fait partie de la définition de « fini »).
@@ -233,13 +237,14 @@ Lighthouse, SEO et GEO sur la production et ouvre une issue en cas de dégradati
   **Captures** (si visuel) / **Nouvelles dépendances** / **Références mises à jour** (SEO, budgets).
 - Chaque PR laisse le projet dans un état qui fonctionne et est déployé en prévisualisation :
   tu peux cliquer et voir le résultat.
-- Je ne fusionne pas : tu relis, tu valides, tu fusionnes.
+- Je fusionne moi-même chaque PR une fois la CI verte et j'enchaîne ; tu suis via les PR et tu peux revenir sur n'importe quel ticket.
 
 **Définition de « fini »** : CI verte (tous les contrôles ci-dessus), tests écrits, nouveau
 gabarit ajouté à `quality/pages.ts`, nouveaux ports accompagnés de leur adapter en mémoire et
 de leurs tests de contrat, documentation (OpenAPI / README de la fonctionnalité) à jour.
 
 ## Contraintes CBD à respecter dans le code et les contenus
+
 - **Paiement** : Stripe/PayPal refusent souvent le CBD → valider le prestataire avant le tunnel de commande (bloquant).
 - **Aucune allégation de santé** (« soigne », « guérit », « anxiété »…) → contrôle automatique en CI sur les textes produits.
 - **Taux de THC ≤ 0,3 %** et **analyses de laboratoire (certificats d'analyse) par lot** affichés sur chaque fiche.
@@ -253,8 +258,9 @@ de leurs tests de contrat, documentation (OpenAPI / README de la fonctionnalité
 Numérotation `epic.ticket` : on peut insérer un ticket sans renuméroter les autres.
 
 ### EPIC 1 — Monorepo, outillage & CI
+
 1.1 Monorepo pnpm + Turborepo, `packages/config` : TypeScript strict partagé.
-1.2 ESLint + Prettier partagés (règles « Qualité du code »), hook Git léger (lint + types sur les fichiers modifiés).
+1.2 ESLint + Prettier partagés (règles « Qualité du code »), hooks Git légers (pre-commit : format des fichiers indexés ; pre-push : format, lint, types).
 1.3 `apps/web` : Next.js 16 minimal (page d'accueil provisoire), jsx-a11y strict.
 1.4 `apps/api` : Hono sur Cloudflare Workers (Wrangler), route `/health`, composition root vide.
 1.5 CI : lint, types, tests unitaires, build des deux apps (Turborepo + cache).
@@ -264,6 +270,7 @@ Numérotation `epic.ticket` : on peut insérer un ticket sans renuméroter les a
 1.9 commitlint, Dependabot (mises à jour groupées), modèle de PR.
 
 ### EPIC 2 — Architecture & garde-fous du code
+
 2.1 `packages/core` : arborescence par fonctionnalité, contrôle CI « zéro dépendance d'exécution ».
 2.2 Règles de frontières ESLint (core ↛ infra, domain ↛ application, imports via `index.ts`, pas de cycles) + une PR de démonstration qui échoue volontairement.
 2.3 `core/shared` : `Result`, types marqués (`Slug`, `Cents`, `Sku`), ports `Clock` et `IdGenerator`.
@@ -273,6 +280,7 @@ Numérotation `epic.ticket` : on peut insérer un ticket sans renuméroter les a
 2.7 knip (code / dépendances inutilisés) + jscpd (duplication) en CI.
 
 ### EPIC 3 — Surveillance des régressions (pipeline)
+
 Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau gabarit.
 3.1 Rapport de PR unique (commentaire mis à jour à chaque exécution) + rapport des nouvelles dépendances.
 3.2 Lighthouse CI sur la prévisualisation, budgets bloquants, comparaison avec `main`.
@@ -285,6 +293,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 3.9 Surveillance nocturne de la production (Lighthouse + SEO + GEO) → ouverture d'une issue si dégradation.
 
 ### EPIC 4 — Socle API & données
+
 4.1 Projet Neon + intégration GitHub : une branche de base par PR (supprimée à la fusion), branchée sur la prévisualisation.
 4.2 Adapter `db-drizzle` : connexion (pilote HTTP), migrations appliquées en CI. Les tables arrivent avec chaque fonctionnalité, pas toutes d'un coup.
 4.3 `packages/contracts` : premiers schémas Zod + génération OpenAPI publiée.
@@ -294,6 +303,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 4.7 Sauvegarde quotidienne de la base (Cron Trigger ou GitHub Actions).
 
 ### EPIC 5 — Comptes
+
 5.1 Better Auth dans l'adapter `infra/auth`, exposé via un port `Authenticator` ; inscription + connexion e-mail / mot de passe ; cookie sur le domaine principal.
 5.2 Lien magique et mot de passe oublié (via `Mailer`).
 5.3 Rôle administrateur + protection des routes d'admin (API) et des pages d'admin (front).
@@ -301,6 +311,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 5.5 Espace client : suppression du compte et export des données (RGPD).
 
 ### EPIC 6 — Catalogue
+
 6.1 Domaine `catalog` : produit, variante, prix TTC/HT, TVA (tests unitaires).
 6.2 Port `ProductRepository` + adapter mémoire + adapter Drizzle (tables catégories, produits, variantes) + tests de contrat.
 6.3 API catalogue en lecture : liste et détail.
@@ -313,6 +324,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 6.10 Port `MediaStorage` + adapter Cloudinary : upload admin → affichage optimisé.
 
 ### EPIC 7 — Stock, panier & commande
+
 7.1 Domaine `inventory` : réservation, décrément atomique (transaction + contrainte) + adapter Drizzle.
 7.2 Domaine + API `cart` pour les invités.
 7.3 Panier du client connecté + fusion à la connexion.
@@ -327,6 +339,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 7.12 Libération automatique des réservations expirées (Cron Trigger).
 
 ### EPIC 8 — Administration
+
 8.1 Produits & variantes (CRUD).
 8.2 Import CSV des produits.
 8.3 Stocks, lots, upload des certificats d'analyse.
@@ -334,6 +347,7 @@ Mis en place sur la page d'accueil provisoire, puis étendu à chaque nouveau ga
 8.5 Remboursement (via `PaymentGateway`).
 
 ### EPIC 9 — SEO
+
 Chaque ticket met à jour la référence SEO / JSON-LD de l'EPIC 3.
 9.1 Métadonnées par page + canonical.
 9.2 Sitemap généré depuis l'API (produits, catégories, guides).
@@ -344,6 +358,7 @@ Chaque ticket met à jour la référence SEO / JSON-LD de l'EPIC 3.
 9.7 Textes d'introduction des catégories (utiles, sans allégation de santé).
 
 ### EPIC 10 — GEO (être cité par ChatGPT, Perplexity, Claude, Gemini)
+
 Chaque ticket étend les contrôles GEO de l'EPIC 3.
 10.1 `robots.txt` : robots d'IA autorisés (OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended…).
 10.2 `llms.txt` + `llms-full.txt` générés depuis l'API : catalogue, prix, teneurs, livraison, retours, FAQ.
@@ -355,18 +370,22 @@ Chaque ticket étend les contrôles GEO de l'EPIC 3.
 10.8 Bing Webmaster Tools + Google Search Console dès la mise en ligne.
 
 ### EPIC 11 — Légal & conformité
+
 11.1 Mentions légales, CGV, politique de confidentialité, déclaration d'accessibilité.
 11.2 Bandeau de consentement (repris de MNL) + test « aucun traceur sans accord ».
 11.3 Contrôle CI anti-allégations de santé sur tous les contenus (intégré au rapport de PR).
 11.4 Confirmation de majorité (si retenue).
 
 ### EPIC 12 — Mesure
+
 12.1 GA4 via GTM après consentement + événements e-commerce standard (`view_item`, `add_to_cart`, `begin_checkout`, `purchase`).
 
 ### EPIC 13 — Lancement
+
 13.1 Domaine + DNS (site + `api.`), HTTPS, Search Console, Bing, IndexNow, premier envoi du sitemap ; activation de la surveillance nocturne (3.9) sur la production.
 
 ## À fournir avant de démarrer
+
 1. **Nom de la boutique** (même provisoire) → nom du dépôt et clé Jira.
 2. **Catalogue** : nombre de produits, types (fleurs, huiles, résines…), variantes.
 3. **Livraison** : transporteurs, tarifs, retrait.
