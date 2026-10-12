@@ -262,11 +262,13 @@ Numérotation `epic.ticket` : on peut insérer un ticket sans renuméroter les a
 
 ### EPIC 1 — Monorepo, outillage & CI
 
+Ordre de réalisation : 1.1, 1.2, **1.5** (CI avant tout code applicatif), puis 1.3, 1.4, 1.6…
+
 1.1 Monorepo pnpm + Turborepo, `packages/config` : TypeScript strict partagé.
 1.2 ESLint + Prettier partagés (règles « Qualité du code »), hooks Git légers (pre-commit : format des fichiers indexés ; pre-push : format, lint, types).
 1.3 `apps/web` : Next.js 16 minimal (page d'accueil provisoire), jsx-a11y strict.
 1.4 `apps/api` : Hono sur Cloudflare Workers (Wrangler), route `/health`, composition root vide.
-1.5 CI : lint, types, tests unitaires, build des deux apps (Turborepo + cache).
+1.5 CI : format, lint, types, tests, build (Turborepo + cache) ; `main` protégée (PR obligatoire, CI verte requise, squash uniquement).
 1.6 Prévisualisation par PR : API (version Workers) + front (Netlify) branchés ensemble.
 1.7 Playwright (Chromium + WebKit iPhone) + axe-core sur la prévisualisation.
 1.8 En-têtes de sécurité (front + API, CORS strict).
