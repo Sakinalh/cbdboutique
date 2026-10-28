@@ -4,7 +4,7 @@ Monorepo pnpm + Turborepo. Plan technique et découpage en tickets : [docs/plan.
 
 ## Prérequis
 
-- Node.js ≥ 20.19 (voir `.nvmrc`)
+- Node.js ≥ 24 (voir `.nvmrc`)
 - pnpm 10 (`corepack enable`)
 
 ## Commandes
