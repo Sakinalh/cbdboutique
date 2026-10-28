@@ -262,7 +262,7 @@ Numérotation `epic.ticket` : on peut insérer un ticket sans renuméroter les a
 
 ### EPIC 1 — Monorepo, outillage & CI
 
-Ordre de réalisation : 1.1, 1.2, **1.5** (CI avant tout code applicatif), puis 1.3, 1.4, 1.6…
+Ordre de réalisation : 1.1, 1.2, **1.5** (CI avant tout code applicatif), puis 1.3, 1.4, 1.10, 1.6… ; 1.11 avec l'EPIC 4.
 
 1.1 Monorepo pnpm + Turborepo, `packages/config` : TypeScript strict partagé.
 1.2 ESLint + Prettier partagés (règles « Qualité du code »), hooks Git légers (pre-commit : format des fichiers indexés ; pre-push : format, lint, types).
@@ -273,6 +273,8 @@ Ordre de réalisation : 1.1, 1.2, **1.5** (CI avant tout code applicatif), puis 
 1.7 Playwright (Chromium + WebKit iPhone) + axe-core sur la prévisualisation.
 1.8 En-têtes de sécurité (front + API, CORS strict).
 1.9 commitlint, Dependabot (mises à jour groupées), modèle de PR.
+1.10 `Dockerfile` de l'API : la même application Hono servie par Node (`@hono/node-server`), image construite en CI (non publiée). Version de Node alignée sur `.nvmrc`.
+1.11 Docker Compose pour le développement local : PostgreSQL + API en conteneur, sans compte Neon.
 
 ### EPIC 2 — Architecture & garde-fous du code
 
@@ -388,6 +390,17 @@ Chaque ticket étend les contrôles GEO de l'EPIC 3.
 ### EPIC 13 — Lancement
 
 13.1 Domaine + DNS (site + `api.`), HTTPS, Search Console, Bing, IndexNow, premier envoi du sitemap ; activation de la surveillance nocturne (3.9) sur la production.
+
+### EPIC 14 — Portfolio (optionnel)
+
+Hors besoin de la boutique : montre des compétences demandées en mission. À faire seulement si
+NestJS revient souvent dans les missions visées. Rien n'est hébergé (0 €) : lancement via Docker Compose.
+
+14.1 `apps/api-nest` : contrôleurs NestJS qui appellent **les mêmes cas d'usage** que `apps/api`
+(même contrat Zod, mêmes tests d'API rejoués sur les deux). Prérequis : EPIC 6. Le conteneur
+d'injection de NestJS reste confiné à cette application ; `core` ne change pas (ADR à écrire,
+en lien avec [0004](adr/0004-injecter-les-dependances-sans-conteneur.md)).
+14.2 Terraform pour l'infrastructure existante (Cloudflare, Neon, Netlify), plan affiché en CI.
 
 ## À fournir avant de démarrer
 
