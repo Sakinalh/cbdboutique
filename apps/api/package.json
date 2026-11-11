@@ -1,0 +1,24 @@
+{
+  "type": "module",
+  "name": "@cbd/api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler types && wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "typecheck": "wrangler types && tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "hono": "4.13.14"
+  },
+  "devDependencies": {
+    "@cbd/config": "workspace:*",
+    "@types/node": "26.6.5",
+    "eslint": "10.12.0",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5",
+    "wrangler": "4.153.0"
+  }
+}
