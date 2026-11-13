@@ -8,14 +8,17 @@
     "build": "wrangler deploy --dry-run --outdir dist",
     "typecheck": "wrangler types && tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:node": "esbuild src/node.ts --bundle --platform=node --format=esm --target=node24 --outfile=dist/node/server.js"
   },
   "dependencies": {
+    "@hono/node-server": "2.1.7",
     "hono": "4.13.14"
   },
   "devDependencies": {
     "@cbd/config": "workspace:*",
     "@types/node": "26.6.5",
+    "esbuild": "0.28.2",
     "eslint": "10.12.0",
     "typescript": "6.0.3",
     "vitest": "5.0.5",
