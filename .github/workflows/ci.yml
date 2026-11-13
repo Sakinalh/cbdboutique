@@ -38,3 +38,27 @@ jobs:
       - run: pnpm format:check
 
       - run: pnpm turbo run lint typecheck test build
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build API image
+        run: >-
+          docker build
+          -f apps/api/Dockerfile
+          -t cbd-api
+          --build-arg NODE_VERSION=$(cat .nvmrc)
+          .
+
+      - name: Smoke test /health
+        run: |
+          docker run -d -p 3000:3000 --name api cbd-api
+          curl --fail --retry 10 --retry-delay 1 --retry-all-errors http://localhost:3000/health
+
+      - name: Show container logs
+        if: failure()
+        run: docker logs api
