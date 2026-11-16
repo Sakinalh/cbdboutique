@@ -269,7 +269,11 @@ Ordre de réalisation : 1.1, 1.2, **1.5** (CI avant tout code applicatif), puis 
 1.3 `apps/web` : Next.js 16 minimal (page d'accueil provisoire), jsx-a11y strict.
 1.4 `apps/api` : Hono sur Cloudflare Workers (Wrangler), route `/health`, composition root vide.
 1.5 CI : format, lint, types, tests, build (Turborepo + cache) ; `main` protégée (PR obligatoire, CI verte requise, squash uniquement).
-1.6 Prévisualisation par PR : API (version Workers) + front (Netlify) branchés ensemble.
+1.6 Prévisualisation par PR et déploiement continu, découpés en quatre PR :
+1.6a Preview de l'API : job CI (`needs` : checks + docker) qui envoie une version du Worker par PR (`wrangler versions upload --preview-alias pr-<n>`) ; ignoré pour les PR venant de forks (pas de secrets).
+1.6b Preview du front : Netlify branché sur le dépôt (`apps/web` comme dossier de base), deploy preview par PR, `main` déployé automatiquement.
+1.6c Branchement : le front d'une PR appelle l'API de la même PR (URL construite à partir de `REVIEW_ID`) et affiche l'état de `/health` ; CORS limité aux origines du front.
+1.6d Déploiement de l'API en production à la fusion sur `main` (`wrangler deploy`), uniquement après une CI verte ; environnement GitHub `production` (secrets limités à `main`), `concurrency` pour ne jamais lancer deux déploiements en parallèle. Plus aucun déploiement manuel.
 1.7 Playwright (Chromium + WebKit iPhone) + axe-core sur la prévisualisation.
 1.8 En-têtes de sécurité (front + API, CORS strict).
 1.9 commitlint, Dependabot (mises à jour groupées), modèle de PR.
