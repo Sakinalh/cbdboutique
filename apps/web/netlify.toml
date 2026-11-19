@@ -1,0 +1,8 @@
+[build]
+  # Built through Turborepo so workspace dependencies are built first, like in CI.
+  command = "pnpm turbo run build --filter=@cbd/web"
+  publish = "apps/web/.next"
+
+[build.environment]
+  # Keep aligned with .nvmrc.
+  NODE_VERSION = "24"
